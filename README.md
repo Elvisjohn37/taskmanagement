@@ -14,7 +14,11 @@ Import the sql file named("tasksmanagement.sql") in the project root directory
 
 Install the required packages of this project.
 
-### `npm start`
+### `npm run dev`
+
+Install the required packages for laravel.
+
+### `composer install`
 
 Start the laravel frameword.
 
