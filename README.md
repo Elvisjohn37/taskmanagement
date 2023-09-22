@@ -32,5 +32,7 @@ Start the laravel frameword.
 
 ### `php artisan serve`
 
+Note: If you encounter error about generate key of the app, Just click the generate key and the app should be run correctly.
+
 Runs the app in the development mode.\
 Open [http://localhost:8000](http://localhost:8000) to view it in your browser.
