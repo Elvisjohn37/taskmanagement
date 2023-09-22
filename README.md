@@ -26,8 +26,6 @@ Go to the .env file.
 
 Edit the DB_DATABASE=laravel to DB_DATABASE=tasksmanagement then save.
 
-### `composer install`
-
 Start the laravel frameword.
 
 ### `php artisan serve`
