@@ -1,0 +1,59 @@
+@import "/resources/scss/__main.scss";
+@import "/resources/scss/__colors.scss";
+@import "/resources/scss/__helper.scss";
+
+.login {
+    @include center;
+    background: lighten($pLight, 100);
+    padding: 40px;
+    box-shadow: 1px 4px 8px $pDark;
+    
+  .form {
+    padding: $standardSpace;
+    width: 25vw;
+    margin: auto;
+
+    form {
+      width: 100%;
+
+      .formGroup {
+        margin: $standardSpace * 2 0;
+
+        &:last-of-type {
+            margin-top: $standardSpace * 4;
+        }
+      }
+    }
+
+    .errorMessage {
+      margin-top: $standardSpace * 2;
+    }
+
+    .title {
+        
+    }
+  }
+
+  @media screen and (max-width: 1000px) {
+    width: 50vw;
+    .form {
+      padding: 0 $standardSpace * 4;
+      width: 100%;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    height: calc(100% - $mainNavigationHeaderHeight);
+    padding: 40px 0px;
+    position: relative;
+    top: 0;
+    transform: unset;
+    left: 0;
+
+    .form {
+      padding: 0 $standardSpace * 4;
+      width: 100%;
+    }
+  }
+}

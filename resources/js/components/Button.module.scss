@@ -1,0 +1,9 @@
+@import "/resources/scss/__colors.scss";
+
+.button {
+  @include secondary;
+
+  &:hover {
+    @include sLight;
+  }
+}

@@ -1,0 +1,131 @@
+@import "/resources/scss/__main.scss";
+@import "/resources/scss/__colors.scss";
+
+.mainNavigation {
+  height: $mainNavigationHeaderHeight;
+  line-height: $mainNavigationHeaderHeight;
+  padding: 0 $standardSpace * 4;
+  background-color: $secondary;
+  box-shadow: 0px 2px 4px darken($pDark, 10);
+  color: $sText;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  font-family: roboto;
+  position: relative;
+  position: fixed;
+  width: 100%;
+  top: 0px;
+  z-index: 2;
+
+  .brandSection {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    .brand,
+    a {
+      font-size: 20px;
+      margin-left: $standardSpace;
+      font-family: roboto;
+      font-weight: 700;
+
+      a {
+        font-size: 20px;
+        color: $sText;
+        font-family: roboto;
+        font-weight: 700;
+      }
+    }
+  }
+
+  .bars {
+    display: none;
+    cursor: pointer;
+  }
+
+  .loginSignUp {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: $standardSpace * 4;
+    overflow: hidden;
+    border-radius: $standardRadius;
+    z-index: 2;
+
+    .login,
+    .signUp,
+    .logout,
+    .trash {
+      transition: $standardDuration;
+      cursor: pointer;
+
+      &:hover {
+        background-color: $sLight;
+        border-color: transparent;
+      }
+
+      a {
+        color: $sText;
+        display: block;
+        padding: 0 $standardSpace;
+      }
+    }
+
+    .login {
+      border-right: 1px solid $sLight;
+    }
+
+    .signUp {
+      border-left: 1px solid $sLight;
+    }
+
+    .trash {
+      border-right: 1px solid $sLight;
+    }
+
+    .logout {
+      border-left: 1px solid $sLight;
+    }
+
+    .logout > button {
+      color: $sText;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .bars {
+      display: block;
+    }
+
+    padding-right: $standardSpace * 2;
+
+    .loginSignUp {
+      display: none;
+
+      &.mobileMenu {
+        @include sLight;
+        display: block;
+        position: absolute;
+        bottom: -200%;
+        right: 0px;
+        width: 50%;
+        height: fit-content;
+        border-radius: unset;
+        border-bottom-left-radius: $standardRadius;
+
+        .login,
+        .signUp,
+        .logout {
+          border: unset;
+
+          &:hover {
+            background-color: $secondary;
+            border-color: transparent;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,54 @@
+@import "/resources/scss/__colors.scss";
+@import "/resources/scss/__main.scss";
+
+.taskList {
+  padding: $standardSpace * 4 0;
+
+  .tasksContainer {
+    padding: $standardSpace * 4 0 0;
+
+    .sliderContainer {
+      padding: $standardSpace $standardSpace * 4;
+    }
+
+    .card {
+      margin: $standardSpace 0;
+    }
+    .unSaved {
+      transform: scale(1.1);
+      z-index: 1;
+      box-shadow: 0px 2px 16px #0000005e;
+    }
+  }
+
+  .form {
+    padding: $standardSpace;
+
+    form {
+      width: 100%;
+
+      .formGroup {
+        margin: $standardSpace 0;
+      }
+    }
+
+    .errorMessage {
+      margin-top: $standardSpace * 2;
+    }
+
+    .title {
+    }
+  }
+}
+
+.default.active {
+  background-color: blue;
+}
+
+.warning.active {
+  background-color: brown;
+}
+
+.success.active {
+  background-color: green;
+}

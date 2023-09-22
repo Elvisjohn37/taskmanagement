@@ -1,0 +1,37 @@
+@import "/resources/scss/__main.scss";
+@import "/resources/scss/__colors.scss";
+
+.task {
+  .actionMenu {
+    padding: $standardSpace * 2 0;
+  }
+}
+
+.card {
+  padding: $standardSpace;
+
+  .form {
+    padding: $standardSpace;
+    margin: auto;
+
+    form {
+      width: 100%;
+
+      .formGroup {
+        margin: $standardSpace 0;
+      }
+    }
+
+    .errorMessage {
+      margin-top: $standardSpace * 2;
+    }
+
+    .title {
+    }
+  }
+
+  .cardActions {
+    display: flex;
+    justify-content: end;
+  }
+}

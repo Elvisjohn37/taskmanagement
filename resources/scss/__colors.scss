@@ -1,0 +1,27 @@
+$primary: #f0f0f0;
+$pLight: #fafafa;
+$pDark: #c2c2c2;
+$pText: black;
+
+$secondary: #11BCC9;
+$sLight: #51d0d6;
+$sDark: #11acb7;
+$sText: #ffffff;
+
+@mixin primary($opacity: 1) {
+    color: $pText;
+    background-color: $primary;
+    opacity: $opacity;
+}
+
+@mixin secondary($opacity: 1) {
+    color: $sText;
+    background-color: $secondary;
+    opacity: $opacity;
+}
+
+@mixin sLight($opacity: 1) {
+    color: $sText;
+    background-color: $sLight;
+    opacity: $opacity;
+}
