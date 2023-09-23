@@ -4,13 +4,13 @@
 .mainLayout {
   font-family: roboto;
   position: relative;
-  min-height: 100vh;
+  min-height: calc(100vh - ($mainNavigationHeaderHeight + $mainFooterHeight));
   background-color: $primary;
 
   .mainContent {
     background-color: $pLight;
-    padding: $standardSpace * 4;
-    min-height: calc(100vh - $mainNavigationHeaderHeight);
+    padding: $mainContentPadding;
+    min-height: calc(100vh - ($mainNavigationHeaderHeight + $mainFooterHeight));
     box-shadow: 0px 4px 8px $pDark;
     margin-top: $mainNavigationHeaderHeight;
 
@@ -18,5 +18,14 @@
       margin: $mainNavigationHeaderHeight auto 0 auto;
       width: 75vw;
     }
+
+    @media screen and (max-width: 768px) {
+      padding: 0 $standardSpace * 2;
+    }
+  }
+
+  .footer {
+    height: $mainFooterHeight;
+    @include sLight;
   }
 }

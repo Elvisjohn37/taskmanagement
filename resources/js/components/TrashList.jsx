@@ -3,18 +3,16 @@ import styles from "./TaskList.module.scss";
 import { Alert } from "@mui/joy";
 import Typography from "@mui/material/Typography";
 import AspectRatio from "@mui/joy/AspectRatio";
-import Box from "@mui/joy/Box";
-import Button from "@mui/joy/Button";
 import Card from "@mui/joy/Card";
 import CardContent from "@mui/joy/CardContent";
 import Sheet from "@mui/joy/Sheet";
-import Skeleton from "@mui/joy/Skeleton";
 import Slider from "@mui/joy/Slider";
 import classnames from "classnames";
 import Chip from "@mui/joy/Chip";
 import FormGroup from "@mui/material/FormGroup";
 import TextField from "@mui/material/TextField";
 import { useDispatch, useSelector } from "react-redux";
+import TaskListSkeleton from "./TaskListSkeleton.jsx";
 import {
   setTaskList,
   getTaskListState,
@@ -28,7 +26,14 @@ import {
   editDescription,
   removeTaskData,
 } from "./tasklist/slice";
-import { addTask, updateTask, removeTask, getTrashList } from "../backend/requests.js";
+import {
+  addTask,
+  updateTask,
+  removeTask,
+  getTrashList,
+} from "../backend/requests.js";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faList } from "@fortawesome/free-solid-svg-icons";
 
 const TrashList = () => {
   // const [tasks, setTasks] = useState([]);
@@ -94,36 +99,6 @@ const TrashList = () => {
       taskType === "newTask" ? removeNewTask({ id }) : removeUnsaved({ id })
     );
   };
-  const handleSave = (event) => {
-    event.preventDefault();
-    dispatch(editUnsaved(newTask));
-    const unSaved = taskList.find((task) => task.taskType === "newTask");
-    const toEdit = taskList.find((task) => task.taskType === "toEdit");
-    if (unSaved) {
-      addTask({
-        data: { ...unSaved, ...newTask },
-        success: () => {
-          dispatch(resetTaskType({ id: unSaved.id }));
-          dispatch(removeUnsaved());
-        },
-        error: () => {},
-        completed: () => {},
-      });
-    }
-
-    if (toEdit) {
-      setIsEditLoading(true);
-      updateTask({
-        data: { ...toEdit, ...newTask },
-        success: () => {
-          dispatch(resetTaskType({ id: toEdit.id }));
-          dispatch(removeUnsaved());
-        },
-        error: () => {},
-        completed: () => setIsEditLoading(false),
-      });
-    }
-  };
 
   const handleStatusChange = (event, taskType, id) => {
     taskType === "newTask" &&
@@ -170,29 +145,6 @@ const TrashList = () => {
       );
   };
 
-  const handleEdit = (id) => {
-    dispatch(
-      editTask({
-        id: id,
-      })
-    );
-  };
-
-  const handleRemove = (id) => {
-    removeTask({
-      data: {task_id: id},
-      success: (response) => {
-        dispatch(removeTaskData({ id }))
-      },
-      error: () => {
-
-      },
-      completed: () => {
-
-      }
-    })
-  }
-
   return (
     <div className={styles.taskList}>
       <div className={styles.title}>
@@ -203,16 +155,18 @@ const TrashList = () => {
       {hasError && <Alert variant="soft" color="danger"></Alert>}
       <div className={styles.tasksContainer}>
         {isFetching ? (
-          <Card variant="outlined" sx={{ display: "flex", gap: 2 }}>
-            <AspectRatio ratio="21/3">
-              <Skeleton variant="overlay">
-                <img
-                  alt=""
-                  src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="
-                />
-              </Skeleton>
-            </AspectRatio>
-          </Card>
+          <TaskListSkeleton count={2} />
+        ) : taskList.length === 0 ? (
+          <div className={styles.warningMessage}>
+            <Alert size="lg" color="primary" variant="soft">
+              No task to be deleted.
+            </Alert>
+            <FontAwesomeIcon
+              className={styles.listIcon}
+              icon={faList}
+              size="lg"
+            />
+          </div>
         ) : (
           taskList.map((task) => (
             <Card

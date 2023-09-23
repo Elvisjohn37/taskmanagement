@@ -9,36 +9,41 @@ import Button from "@mui/joy/Button";
 import Card from "@mui/joy/Card";
 import CardContent from "@mui/joy/CardContent";
 import Sheet from "@mui/joy/Sheet";
-import Skeleton from "@mui/joy/Skeleton";
 import Slider from "@mui/joy/Slider";
 import classnames from "classnames";
 import Chip from "@mui/joy/Chip";
 import FormGroup from "@mui/material/FormGroup";
 import TextField from "@mui/material/TextField";
 import { useDispatch, useSelector } from "react-redux";
+import TaskListSkeleton from "./TaskListSkeleton.jsx";
 import {
   setTaskList,
   getTaskListState,
   setTaskStatus,
   removeUnsaved,
-  editUnsaved,
   editTask,
   removeNewTask,
   resetTaskType,
   editName,
   editDescription,
   removeTaskData,
+  addTask as addTaskAction,
 } from "./tasklist/slice";
 import { addTask, updateTask, removeTask } from "./../backend/requests.js";
+import ConfirmAction from "./tasklist/ConfirmAction";
+import Backdrop from "./Backdrop";
+import { refreshUserData } from "../Pages/approute/userData";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faList } from "@fortawesome/free-solid-svg-icons";
 
 const TaskList = () => {
-  // const [tasks, setTasks] = useState([]);
   const [hasError, setHasError] = useState("");
-  const [isFetching, setIsFetching] = useState(false);
+  const [isFetching, setIsFetching] = useState(true);
   const dispatch = useDispatch();
   const { taskList } = useSelector(getTaskListState);
   const [newTask, setNewTask] = useState({});
-  const [isEditLoading, setIsEditLoading] = useState(false);
+  const [isUnsavedLoading, setIsUnsavedLoading] = useState(false);
+  const [isMoveTrashLoading, setIsMoveTrashLoading] = useState(false);
 
   useEffect(() => {
     setIsFetching(true);
@@ -97,23 +102,31 @@ const TaskList = () => {
   };
   const handleSave = (event) => {
     event.preventDefault();
-    dispatch(editUnsaved(newTask));
+
     const unSaved = taskList.find((task) => task.taskType === "newTask");
     const toEdit = taskList.find((task) => task.taskType === "toEdit");
     if (unSaved) {
+      setIsUnsavedLoading(true);
       addTask({
         data: { ...unSaved, ...newTask },
-        success: () => {
-          dispatch(resetTaskType({ id: unSaved.id }));
-          dispatch(removeUnsaved());
+        success: (response) => {
+          setNewTask({});
+          dispatch(
+            addTaskAction({
+              task: response.data,
+            })
+          );
+          dispatch(resetTaskType());
         },
         error: () => {},
-        completed: () => {},
+        completed: () => {
+          setIsUnsavedLoading(false);
+        },
       });
     }
 
     if (toEdit) {
-      setIsEditLoading(true);
+      setIsUnsavedLoading(true);
       updateTask({
         data: { ...toEdit, ...newTask },
         success: () => {
@@ -121,7 +134,7 @@ const TaskList = () => {
           dispatch(removeUnsaved());
         },
         error: () => {},
-        completed: () => setIsEditLoading(false),
+        completed: () => setIsUnsavedLoading(false),
       });
     }
   };
@@ -172,6 +185,7 @@ const TaskList = () => {
   };
 
   const handleEdit = (id) => {
+    dispatch(resetTaskType());
     dispatch(
       editTask({
         id: id,
@@ -180,19 +194,17 @@ const TaskList = () => {
   };
 
   const handleRemove = (id) => {
+    setIsMoveTrashLoading(true);
     removeTask({
-      data: {task_id: id},
+      data: { task_id: id },
       success: (response) => {
-        dispatch(removeTaskData({ id }))
+        dispatch(removeTaskData({ id }));
+        refreshUserData();
       },
-      error: () => {
-
-      },
-      completed: () => {
-
-      }
-    })
-  }
+      error: () => {},
+      completed: () => setIsMoveTrashLoading(false),
+    });
+  };
 
   return (
     <div className={styles.taskList}>
@@ -204,16 +216,18 @@ const TaskList = () => {
       {hasError && <Alert variant="soft" color="danger"></Alert>}
       <div className={styles.tasksContainer}>
         {isFetching ? (
-          <Card variant="outlined" sx={{ display: "flex", gap: 2 }}>
-            <AspectRatio ratio="21/3">
-              <Skeleton variant="overlay">
-                <img
-                  alt=""
-                  src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="
-                />
-              </Skeleton>
-            </AspectRatio>
-          </Card>
+          <TaskListSkeleton count={2} />
+        ) : taskList.length === 0 ? (
+          <div className={styles.warningMessage}>
+            <Alert size="lg" color="primary" variant="soft">
+              You have no task yet.
+            </Alert>
+            <FontAwesomeIcon
+              className={styles.listIcon}
+              icon={faList}
+              size="lg"
+            />
+          </div>
         ) : (
           taskList.map((task) => (
             <Card
@@ -344,7 +358,7 @@ const TaskList = () => {
                           onClick={handleSave}
                           variant="soft"
                           color="primary"
-                          loading={isEditLoading}
+                          loading={isUnsavedLoading}
                         >
                           Save
                         </Button>
@@ -367,9 +381,21 @@ const TaskList = () => {
                           Cancel
                         </Button>
                       ) : (
-                        <Button onClick={() => handleRemove(task.id)} variant="outlined" color="danger">
-                          Remove
-                        </Button>
+                        <ConfirmAction
+                          confirmAction={() => handleRemove(task.id)}
+                        >
+                          {(setOpen) => (
+                            <Button
+                              onClick={() => {
+                                setOpen(true);
+                              }}
+                              variant="outlined"
+                              color="danger"
+                            >
+                              Remove
+                            </Button>
+                          )}
+                        </ConfirmAction>
                       )}
                     </Box>
                   </form>
@@ -379,6 +405,7 @@ const TaskList = () => {
           ))
         )}
       </div>
+      <Backdrop isOpen={isMoveTrashLoading} />
     </div>
   );
 };

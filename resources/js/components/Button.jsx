@@ -9,6 +9,7 @@ const Button = ({
   isLoading = false,
   disabled = false,
   children,
+  size = 'lg'
 }) => {
   return (
     <MuiButton
@@ -17,6 +18,7 @@ const Button = ({
       className={styles.button}
       onClick={onClick}
       disabled={disabled}
+      size={size}
     >
       {children}
     </MuiButton>

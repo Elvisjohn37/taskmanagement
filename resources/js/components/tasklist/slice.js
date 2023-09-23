@@ -16,7 +16,7 @@ const taskListSlice = createSlice({
         {
           ...action.payload?.task,
           status_id: 0,
-          id: Math.max(...state.taskList.map((o) => o.id)) + 1,
+          id: state.taskList.length > 0 ? action.payload?.task.id : action.payload.id,
           isSaved: false,
         },
         ...state.taskList,
@@ -30,39 +30,31 @@ const taskListSlice = createSlice({
       );
     },
     removeUnsaved: (state, action) => {
-      state.taskList = state.taskList.map((task) => {
-        if (task.id === action.payload.id) {
-          return { ...task, taskType: "" };
-        } else {
-          return task;
-        }
-      });
+      state.taskList = state.taskList.map((task) =>
+        task.id === action.payload.id ? { ...task, taskType: "" } : task
+      );
     },
     editUnsaved: (state, action) => {
-      state.taskList = state.taskList.map((task) => {
-        if (task.taskType === "newTask") {
-          return {
-            ...task,
-            name: action.payload.name,
-            description: action.payload.description,
-          };
-        } else {
-          return task;
-        }
-      });
+      state.taskList = state.taskList.map((task) =>
+        task.taskType === "newTask"
+          ? {
+              ...task,
+              name: action.payload.name,
+              description: action.payload.description,
+            }
+          : task
+      );
     },
     editTask: (state, action) => {
-      state.taskList = state.taskList.map((task) => {
-        if (task.id === action.payload.id) {
-          return {
-            ...task,
-            taskType: "toEdit",
-            isSaved: false,
-          };
-        } else {
-          return { ...task, taskType: "" };
-        }
-      });
+      state.taskList = state.taskList.map((task) =>
+        task.id === action.payload.id
+          ? {
+              ...task,
+              taskType: "toEdit",
+              isSaved: false,
+            }
+          : { ...task, taskType: "" }
+      );
     },
 
     removeNewTask: (state, action) => {
@@ -70,10 +62,13 @@ const taskListSlice = createSlice({
         (task) => task.taskType != "newTask"
       );
     },
-    resetTaskType: (state, action) => {
-      state.taskList = state.taskList.map((task) =>
-        task.id === action.payload.id ? { ...task, taskType: "" } : task
-      );
+    resetTaskType: (state) => {
+      state.taskList = state.taskList
+        .filter((task) => task.id !== undefined)
+        .map((task) => ({
+          ...task,
+          taskType: "",
+        }));
     },
     editName: (state, action) => {
       state.taskList = state.taskList.map((task) =>
@@ -111,6 +106,7 @@ export const {
   editName,
   editDescription,
   removeTaskData,
+  assignId,
 } = taskListSlice.actions;
 
 export default taskListSlice.reducer;

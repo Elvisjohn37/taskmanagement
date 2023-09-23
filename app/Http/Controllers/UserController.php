@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -33,11 +31,11 @@ class UserController extends BaseController
             }
         }
         if(Auth::check()) {
-            return [
+            return response([
                 "fullName" => $request->fullName,
                 "email" => $request->email,
                 "isLogin" => true
-            ];
+            ]);
         }
     }
     
@@ -45,7 +43,7 @@ class UserController extends BaseController
     {
         auth()->logout();
         $request->session()->invalidate();
-        return Auth::user();
+        return response(Auth::user());
     }
 
     public function login(Request $request)
@@ -59,9 +57,9 @@ class UserController extends BaseController
             $request->session()->regenerate();
         }
         if(Auth::check()) {
-            return [
+            return response([
                 "isLogin" => true
-            ];
+            ]);
         }
         return [];
     }
@@ -70,13 +68,13 @@ class UserController extends BaseController
     {
         if(Auth::check()) {
             $user = Auth::user();
-            return [
+            return response([
                 "fullName" => $user->full_name,
                 "email" => $user->email,
                 "isLogin" => true
-            ];
+            ]);
         }
-        return [];
+        return response([]);
     }
 }
 

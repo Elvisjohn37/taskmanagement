@@ -49,10 +49,12 @@
     top: 0;
     transform: unset;
     left: 0;
+    min-height: calc(100vh - $mainNavigationHeaderHeight);
 
     .form {
       padding: 0 $standardSpace * 4;
       width: 100%;
+      @include center;
     }
   }
 

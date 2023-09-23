@@ -5,7 +5,7 @@ import MainLayout from "/resources/js/components/MainLayout.jsx";
 import { useSelector } from "react-redux";
 import { getUserState } from "./login/slice.js";
 import { getAppRouteState } from "./approute/slice.js";
-import useFetchUserData from "./approute/useFetchUserData.js";
+import { refreshUserData } from "./approute/userData.js";
 
 const LandingPage = React.lazy(() => import("./LandingPage.jsx"));
 const Task = React.lazy(() => import("./Task.jsx"));
@@ -14,7 +14,7 @@ const Signup = React.lazy(() => import("./Signup.jsx"));
 const Trash = React.lazy(() => import("./Trash.jsx"));
 
 const Approute = () => {
-  useFetchUserData();
+  refreshUserData();
   const user = useSelector(getUserState);
   const appRoute = useSelector(getAppRouteState);
 

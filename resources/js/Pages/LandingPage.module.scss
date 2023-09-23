@@ -1,7 +1,7 @@
-@import '/resources/scss/__main.scss';
-@import '/resources/scss/__colors.scss';
+@import "/resources/scss/__main.scss";
+@import "/resources/scss/__colors.scss";
 
 .landingPage {
-    background-color: $primary;
-    height: calc(100vh - $mainNavigationHeaderHeight);
+  background-color: $primary;
+  min-height: calc(100vh - ($mainFooterHeight + $mainNavigationHeaderHeight + $mainContentPadding * 2));
 }

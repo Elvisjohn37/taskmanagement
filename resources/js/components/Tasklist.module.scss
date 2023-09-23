@@ -1,8 +1,11 @@
 @import "/resources/scss/__colors.scss";
 @import "/resources/scss/__main.scss";
+@import "/resources/scss/__keyframes.scss";
+@import "/resources/scss/__helper.scss";
 
 .taskList {
   padding: $standardSpace * 4 0;
+  transition: 0.3s;
 
   .tasksContainer {
     padding: $standardSpace * 4 0 0;
@@ -15,9 +18,10 @@
       margin: $standardSpace 0;
     }
     .unSaved {
-      transform: scale(1.1);
+      transition: 0.3s;
       z-index: 1;
-      box-shadow: 0px 2px 16px #0000005e;
+      box-shadow: 0px 2px 32px #0000005e;
+      @include zoomIn;
     }
   }
 
@@ -38,6 +42,18 @@
 
     .title {
     }
+  }
+}
+
+.warningMessage {
+  @include center;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  .listIcon {
+    font-size: 20vw;
+    color: lighten($sLight, 20);
   }
 }
 
