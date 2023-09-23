@@ -10,7 +10,9 @@ const MainLayout = () => {
   const user = useSelector(getUserState);
 
   return (
-    <div className={classnames([styles.mainLayout, user.isLogin && "login"])}>
+    <div
+      className={classnames([styles.mainLayout, user.isLogin ? styles.login : styles.notLogin])}
+    >
       <MainNavigation />
       <div className={styles.mainContent}>
         <Outlet />

@@ -24,6 +24,11 @@
     }
   }
 
+  &.notLogin .mainContent {
+    padding: 0;
+    max-height: calc(100vh - ($mainNavigationHeaderHeight + $mainFooterHeight));
+  }
+
   .footer {
     height: $mainFooterHeight;
     @include sLight;
