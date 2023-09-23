@@ -96,16 +96,20 @@ const TaskList = () => {
     const status = ["To Do", "In Progress", "Completed"];
     return parseInt(value);
   }
-  //UnsavedEdit
+
   const handleCancel = (taskType, id) => {
-    dispatch(discardChanges(unsavedEdit));
-    dispatch(
-      taskType === "newTask" ? removeNewTask({ id }) : removeUnsaved({ id })
-    );
+    if (taskList.length > 1) {
+      dispatch(discardChanges(unsavedEdit));
+      dispatch(
+        taskType === "newTask" ? removeNewTask({ id }) : removeUnsaved({ id })
+      );
+    } else {
+      dispatch(removeNewTask({ id }));
+    }
   };
+
   const handleSave = (event) => {
     event.preventDefault();
-
     const unSaved = taskList.find((task) => task.taskType === "newTask");
     const toEdit = taskList.find((task) => task.taskType === "toEdit");
     if (unSaved) {
@@ -213,7 +217,7 @@ const TaskList = () => {
   return (
     <div className={styles.taskList}>
       <div className={styles.title}>
-        <Typography variant="h3" component="h4">
+        <Typography className={styles.text} variant="h3" component="h4">
           Task List
         </Typography>
       </div>
@@ -338,7 +342,7 @@ const TaskList = () => {
                           getAriaValueText={valueText}
                           marks={getMarks(task.status_id)}
                           defaultValue={0}
-                          value={task.status_id.toString()}
+                          value={task.status_id}
                           min={0}
                           max={2}
                           color={getMarks()[task.status_id].color}

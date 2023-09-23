@@ -7,6 +7,13 @@
   padding: $standardSpace * 4 0;
   transition: 0.3s;
 
+  @media screen and (max-width: 768px) {
+    padding: $standardSpace * 2 0;
+    & > .title .text {
+      font-size: 20px;
+    }
+  }
+
   .tasksContainer {
     padding: $standardSpace * 4 0 0;
 
