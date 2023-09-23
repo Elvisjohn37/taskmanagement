@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 22, 2023 at 03:33 AM
+-- Generation Time: Sep 23, 2023 at 05:02 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -36,17 +36,6 @@ CREATE TABLE `tasks` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `tasks`
---
-
-INSERT INTO `tasks` (`id`, `user_id`, `status_id`, `name`, `description`, `created_at`, `updated_at`) VALUES
-(65, 53, 0, 'Assessment', 'To be submit before 11am', '2023-09-21 17:23:32', '2023-09-21 17:23:32'),
-(66, 53, 2, 'ffff', 'ffff', '2023-09-21 17:23:46', '2023-09-21 17:25:02'),
-(67, 53, 1, 'ffff', 'ffff', '2023-09-21 17:24:33', '2023-09-21 17:25:19'),
-(68, 53, 0, 'ffff', 'ffff', '2023-09-21 17:25:09', '2023-09-21 17:25:09'),
-(69, 53, 0, 'test', 'test description', '2023-09-21 17:25:56', '2023-09-21 17:25:56');
 
 -- --------------------------------------------------------
 
@@ -81,16 +70,6 @@ CREATE TABLE `trashes` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `trashes`
---
-
-INSERT INTO `trashes` (`id`, `task_id`, `created_at`, `updated_at`) VALUES
-(19, 65, '2023-09-21 17:24:24', '2023-09-21 17:24:24'),
-(20, 67, '2023-09-21 17:24:44', '2023-09-21 17:24:44'),
-(21, 66, '2023-09-21 17:25:26', '2023-09-21 17:25:26'),
-(22, 68, '2023-09-21 17:25:35', '2023-09-21 17:25:35');
-
 -- --------------------------------------------------------
 
 --
@@ -111,7 +90,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `full_name`, `email`, `password`, `updated_at`, `created_at`) VALUES
-(53, 'Elvis John', 'elvis@gg.com', '$2y$10$IE5Rgm8eRxzL4A.122HtfOVn80MndGJMBVDmhy4/LX5wZxBK8sI/W', '2023-09-21 17:22:28', '2023-09-21 17:22:28');
+(53, 'Elvis John', 'elvis@gg.com', '$2y$10$IE5Rgm8eRxzL4A.122HtfOVn80MndGJMBVDmhy4/LX5wZxBK8sI/W', '2023-09-21 17:22:28', '2023-09-21 17:22:28'),
+(54, 'kjkdd dd', 'elvis@gg.coms', '$2y$10$LV1i50GUEHilhoWJ8cYD.Oo2bx0qMefw44MOVNR255JIwuTwEWcdG', '2023-09-23 05:14:54', '2023-09-23 05:14:54');
 
 --
 -- Indexes for dumped tables
@@ -149,7 +129,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `tasks`
 --
 ALTER TABLE `tasks`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=226;
 
 --
 -- AUTO_INCREMENT for table `taskstatus`
@@ -161,13 +141,13 @@ ALTER TABLE `taskstatus`
 -- AUTO_INCREMENT for table `trashes`
 --
 ALTER TABLE `trashes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=179;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
