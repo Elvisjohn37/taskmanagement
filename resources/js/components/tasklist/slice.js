@@ -16,7 +16,10 @@ const taskListSlice = createSlice({
         {
           ...action.payload?.task,
           status_id: 0,
-          id: state.taskList.length > 0 ? action.payload?.task.id : action.payload.id,
+          id:
+            state.taskList.length > 0
+              ? action.payload?.task.id
+              : action.payload.id,
           isSaved: false,
         },
         ...state.taskList,
@@ -89,6 +92,11 @@ const taskListSlice = createSlice({
         (task) => task.id !== action.payload.id
       );
     },
+    discardChanges: (state, action) => {
+      state.taskList = state.taskList.map((task) =>
+        task.id === action.payload.id ? action.payload : task
+      );
+    },
   },
 });
 
@@ -107,6 +115,7 @@ export const {
   editDescription,
   removeTaskData,
   assignId,
+  discardChanges,
 } = taskListSlice.actions;
 
 export default taskListSlice.reducer;

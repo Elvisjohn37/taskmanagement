@@ -28,6 +28,7 @@ import {
   editDescription,
   removeTaskData,
   addTask as addTaskAction,
+  discardChanges,
 } from "./tasklist/slice";
 import { addTask, updateTask, removeTask } from "./../backend/requests.js";
 import ConfirmAction from "./tasklist/ConfirmAction";
@@ -44,6 +45,7 @@ const TaskList = () => {
   const [newTask, setNewTask] = useState({});
   const [isUnsavedLoading, setIsUnsavedLoading] = useState(false);
   const [isMoveTrashLoading, setIsMoveTrashLoading] = useState(false);
+  const [unsavedEdit, setUnsavedEdit] = useState({});
 
   useEffect(() => {
     setIsFetching(true);
@@ -94,8 +96,9 @@ const TaskList = () => {
     const status = ["To Do", "In Progress", "Completed"];
     return parseInt(value);
   }
-
+  //UnsavedEdit
   const handleCancel = (taskType, id) => {
+    dispatch(discardChanges(unsavedEdit));
     dispatch(
       taskType === "newTask" ? removeNewTask({ id }) : removeUnsaved({ id })
     );
@@ -184,11 +187,12 @@ const TaskList = () => {
       );
   };
 
-  const handleEdit = (id) => {
+  const handleEdit = (task) => {
+    setUnsavedEdit(task);
     dispatch(resetTaskType());
     dispatch(
       editTask({
-        id: id,
+        id: task.id,
       })
     );
   };
@@ -364,7 +368,7 @@ const TaskList = () => {
                         </Button>
                       ) : (
                         <Button
-                          onClick={() => handleEdit(task.id)}
+                          onClick={() => handleEdit(task)}
                           variant="soft"
                           color="primary"
                         >
