@@ -8,10 +8,12 @@ const Button = ({
   type = "button",
   isLoading = false,
   children,
-  size = 'lg'
+  size = "lg",
+  disabled = false,
 }) => {
   return (
     <MuiButton
+      disabled={disabled}
       loading={isLoading}
       type={type}
       className={styles.button}
