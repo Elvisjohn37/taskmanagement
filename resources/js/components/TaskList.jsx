@@ -28,7 +28,6 @@ import {
   editDescription,
   removeTaskData,
   addTask as addTaskAction,
-  discardChanges,
 } from "./tasklist/slice";
 import { addTask, updateTask, removeTask } from "./../backend/requests.js";
 import ConfirmAction from "./tasklist/ConfirmAction";
@@ -92,14 +91,8 @@ const TaskList = () => {
     ];
   };
 
-  function valueText(value) {
-    const status = ["To Do", "In Progress", "Completed"];
-    return parseInt(value);
-  }
-
   const handleCancel = (taskType, id) => {
     if (taskList.length > 1) {
-      dispatch(discardChanges(unsavedEdit));
       dispatch(
         taskType === "newTask" ? removeNewTask({ id }) : removeUnsaved({ id })
       );
@@ -125,10 +118,7 @@ const TaskList = () => {
           );
           dispatch(resetTaskType());
         },
-        error: () => {},
-        completed: () => {
-          setIsUnsavedLoading(false);
-        },
+        completed: () => setIsUnsavedLoading(false),
       });
     }
 
@@ -140,7 +130,6 @@ const TaskList = () => {
           dispatch(resetTaskType({ id: toEdit.id }));
           dispatch(removeUnsaved());
         },
-        error: () => {},
         completed: () => setIsUnsavedLoading(false),
       });
     }
@@ -192,7 +181,6 @@ const TaskList = () => {
   };
 
   const handleEdit = (task) => {
-    setUnsavedEdit(task);
     dispatch(resetTaskType());
     dispatch(
       editTask({
@@ -205,11 +193,10 @@ const TaskList = () => {
     setIsMoveTrashLoading(true);
     removeTask({
       data: { task_id: id },
-      success: (response) => {
+      success: () => {
         dispatch(removeTaskData({ id }));
         refreshUserData();
       },
-      error: () => {},
       completed: () => setIsMoveTrashLoading(false),
     });
   };
@@ -237,7 +224,7 @@ const TaskList = () => {
             />
           </div>
         ) : (
-          taskList.map((task) => (
+          taskList.map((task, index) => (
             <Card
               className={classnames([
                 styles.card,
@@ -298,7 +285,7 @@ const TaskList = () => {
                     <Typography
                       level="body-sm"
                       fontWeight="lg"
-                      textColor="text.tertiary"
+                      textcolor="text.tertiary"
                     >
                       {task.taskType === "newTask" ||
                       task.taskType === "toEdit" ? (
@@ -339,7 +326,7 @@ const TaskList = () => {
                       <div className={styles.sliderContainer}>
                         <Slider
                           aria-label="Small steps"
-                          getAriaValueText={valueText}
+                          getAriaValueText={(value) => parseInt(value)}
                           marks={getMarks(task.status_id)}
                           defaultValue={0}
                           value={task.status_id}

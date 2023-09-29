@@ -6,8 +6,9 @@ import _ from "lodash";
 import styles from "./TaskListSkeleton.module.scss";
 
 const TaskListSkeleton = ({ count }) =>
-  _.range(count).map(() => (
+  _.range(count).map((c) => (
     <Card
+      key={c}
       className={styles.taskListSkeleton}
       variant="outlined"
       sx={{ display: "flex", gap: 2 }}

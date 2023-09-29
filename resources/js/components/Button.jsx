@@ -7,7 +7,6 @@ const Button = ({
   onClick = () => null,
   type = "button",
   isLoading = false,
-  disabled = false,
   children,
   size = 'lg'
 }) => {
@@ -17,7 +16,6 @@ const Button = ({
       type={type}
       className={styles.button}
       onClick={onClick}
-      disabled={disabled}
       size={size}
     >
       {children}
