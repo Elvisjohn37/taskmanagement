@@ -18,18 +18,11 @@ import {
   getTaskListState,
   setTaskStatus,
   removeUnsaved,
-  editUnsaved,
-  editTask,
   removeNewTask,
-  resetTaskType,
   editName,
   editDescription,
-  removeTaskData,
 } from "./tasklist/slice";
 import {
-  addTask,
-  updateTask,
-  removeTask,
   getTrashList,
 } from "../backend/requests.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
