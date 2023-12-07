@@ -32,5 +32,7 @@
   .footer {
     height: $mainFooterHeight;
     @include sLight;
+    position: relative;
+    z-index: 1;
   }
 }
