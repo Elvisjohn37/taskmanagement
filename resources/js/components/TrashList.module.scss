@@ -1,0 +1,77 @@
+@import "/resources/scss/__colors.scss";
+@import "/resources/scss/__main.scss";
+@import "/resources/scss/__keyframes.scss";
+@import "/resources/scss/__helper.scss";
+
+.taskList {
+  padding: $standardSpace * 4 0;
+  transition: 0.3s;
+
+  @media screen and (max-width: 768px) {
+    padding: $standardSpace * 2 0;
+    & > .title .text {
+      font-size: 20px;
+    }
+  }
+
+  .tasksContainer {
+    padding: $standardSpace * 4 0 0;
+
+    .sliderContainer {
+      padding: $standardSpace $standardSpace * 4;
+    }
+
+    .card {
+      margin: $standardSpace 0;
+    }
+    .unSaved {
+      transition: 0.3s;
+      z-index: 1;
+      box-shadow: 0px 2px 32px #0000005e;
+      @include zoomIn;
+    }
+  }
+
+  .form {
+    padding: $standardSpace;
+
+    form {
+      width: 100%;
+
+      .formGroup {
+        margin: $standardSpace 0;
+      }
+    }
+
+    .errorMessage {
+      margin-top: $standardSpace * 2;
+    }
+
+    .title {
+    }
+  }
+}
+
+.warningMessage {
+  @include center;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  .listIcon {
+    font-size: 20vw;
+    color: lighten($sLight, 20);
+  }
+}
+
+.default.active {
+  background-color: blue;
+}
+
+.warning.active {
+  background-color: brown;
+}
+
+.success.active {
+  background-color: green;
+}

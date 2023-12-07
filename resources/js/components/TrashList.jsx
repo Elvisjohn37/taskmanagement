@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import styles from "./TaskList.module.scss";
+import styles from "./TrashList.module.scss";
 import { Alert } from "@mui/joy";
 import Typography from "@mui/material/Typography";
 import AspectRatio from "@mui/joy/AspectRatio";
